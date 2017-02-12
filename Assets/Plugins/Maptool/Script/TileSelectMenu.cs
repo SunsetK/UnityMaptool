@@ -63,6 +63,7 @@ namespace Maptool
                 tileComponent.SetParent(this.gameObject);
                 tileComponent.InitTile(_type, i);
 
+                tileMenuGrid.repositionNow = true;
                 tileInstance.transform.SetParent(tileMenuGrid.transform, false);
                 tileButtons.Add(tileInstance);
             }
