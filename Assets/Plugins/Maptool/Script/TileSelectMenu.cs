@@ -5,7 +5,7 @@ using Maptool.Component;
 
 namespace Maptool
 {
-    public class TileSelectMenu : UIManager
+    public class TileSelectMenu : WindowManager
     {
         #region Public Field
 
@@ -18,11 +18,19 @@ namespace Maptool
 
         #region Public Methods
 
+        /// <summary>
+        /// Start.
+        /// </summary>
         public void Start()
         {
+            WindowInit();
             InitTileSet();
         }
 
+        /// <summary>
+        /// St Selected Title.
+        /// </summary>
+        /// <param name="_name">Tile name.</param>
         public void SetSelectedTile(string _name)
         {
             for (int i = 0; i < tileButtons.Count; i++)
@@ -37,6 +45,9 @@ namespace Maptool
 
         #region Private Methods
 
+        /// <summary>
+        /// Innitialize tile set.
+        /// </summary>
         private void InitTileSet()
         {
             List<TileManager.TYPE> _tileType = new List<TileManager.TYPE>
@@ -51,6 +62,10 @@ namespace Maptool
             } 
         }
 
+        /// <summary>
+        /// Set tile button.
+        /// </summary>
+        /// <param name="_type">Tile type.</param>
         private void SetTileButton(TileManager.TYPE _type)
         {
             int maxNum = TileManager.GetMaxNumber(_type);
@@ -59,10 +74,9 @@ namespace Maptool
             {
                 var tileInstance = Instantiate(tileButton) as GameObject;
                 var tileComponent = tileInstance.GetComponent<TileMenu.TileSelectButton>();
-                Debug.Log("tileComponent : " + tileComponent);
+
                 tileComponent.SetParent(this.gameObject);
                 tileComponent.InitTile(_type, i);
-
                 tileMenuGrid.repositionNow = true;
                 tileInstance.transform.SetParent(tileMenuGrid.transform, false);
                 tileButtons.Add(tileInstance);

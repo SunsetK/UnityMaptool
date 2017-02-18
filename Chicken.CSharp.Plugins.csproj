@@ -85,9 +85,12 @@
     <Compile Include="Assets\Plugins\Maptool\Script\Component\Tile.cs" />
     <Compile Include="Assets\Plugins\Maptool\Script\Component\TileSelectButton.cs" />
     <Compile Include="Assets\Plugins\Maptool\Script\Config\Constants.cs" />
+    <Compile Include="Assets\Plugins\Maptool\Script\MapSettingMenu.cs" />
+    <Compile Include="Assets\Plugins\Maptool\Script\MaptoolManager.cs" />
     <Compile Include="Assets\Plugins\Maptool\Script\TileManager.cs" />
     <Compile Include="Assets\Plugins\Maptool\Script\TileSelectMenu.cs" />
-    <Compile Include="Assets\Plugins\Maptool\Script\UIManager.cs" />
+    <Compile Include="Assets\Plugins\Maptool\Script\WindowManager.cs" />
+    <Compile Include="Assets\Plugins\Maptool\Script\WindowsManager.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\BMFontReader.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\ComponentSelector.cs" />
@@ -95,7 +98,6 @@
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\EventDelegateEditor.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\FreeType.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\NGUIContextMenu.cs" />
-    <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\NGUIEditorExtensions.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\NGUIEditorTools.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\NGUIHandles.cs" />
     <Compile Include="Assets\Plugins\NGUI\Scripts\Editor\NGUIHelp.cs" />

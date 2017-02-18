@@ -33,7 +33,6 @@ namespace Maptool.TileMenu
 
         public void SetParent(GameObject _obj)
         {
-            Debug.Log("SetParent : " + _obj);
             Parent = _obj;
         }
 

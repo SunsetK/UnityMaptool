@@ -40,7 +40,7 @@ namespace Maptool.Config.Constants
         public class MAX_NUMBER
         {
             public static int GROUND = 4;
-            public static int PATH   = 5;
+            public static int PATH   = 4;
             public static int WATER  = 9;
             public static int OBJECT = 2;
         }

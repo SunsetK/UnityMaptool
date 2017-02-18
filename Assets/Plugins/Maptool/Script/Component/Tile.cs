@@ -30,7 +30,6 @@ namespace Maptool.Component
             Reverse = TileManager.REVERS.DEFAULT;
             Rotaion = TileManager.ROTATION.DEFAULT;
             Name = TileManager.GetTileName(Type, Number);
-            Debug.Log("TileName : " + Name);
         }
 
         #endregion Public Methods
