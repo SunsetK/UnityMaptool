@@ -5,33 +5,64 @@ using Maptool.Component;
 
 namespace Maptool
 {
-    public class MaptoolManager : MonoBehaviour
+    public class MaptoolManager
     {
         #region Public Property
+        public static MaptoolManager instance = null;
+        public static MaptoolManager Instance       
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new MaptoolManager();
+                }
+                return instance;
+            } 
+        }
 
-        public static int            CurrentLayer { get; private set; }
-        public static Vector2        MapSize      { get; private set; }
-        public static Tile           CurrentTile  { get; private set; }
+        public int            CurrentLayer   { get; private set; }
+        public Vector2        MapSize        { get; private set; }
+        public Tile           CurrentTile    { get; private set; }
 
         #endregion Public Property
 
         #region Public Methods
 
-        public static void SetMapSize(Vector2 _size)
+        public int GetTileNumber()
+        {
+            int _x = (int)MapSize.x;
+            int _y = (int)MapSize.y;
+
+            return _x * _y;
+        }
+
+        public void SetMapSize(Vector2 _size)
         {
             MapSize = _size;
         }
 
-        public static void SetLayer(int _layer)
+        public void SetLayer(int _layer)
         {
             CurrentLayer = _layer;
         }
 
-        public static void SetTile(Tile _tile)
+        public void SetTile(Tile _tile)
         {
             CurrentTile = _tile;
         }
 
         #endregion Public Methods
+
+        #region Private Methods
+
+        private MaptoolManager()
+        {
+            CurrentLayer = 0;
+            MapSize = new Vector2(5, 5);
+            CurrentTile = new Tile();
+        }
+
+        #endregion Private Methods
     }
 }

@@ -44,7 +44,7 @@ namespace Maptool.TileMenu
 
         public void OnClick()
         {
-            menu.SetSelectedTile(TileInfo.Name);
+            menu.SetSelectedTile(TileInfo);
             SetSelectStatus(true);
         }
 

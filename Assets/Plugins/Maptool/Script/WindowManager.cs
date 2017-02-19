@@ -10,16 +10,17 @@ namespace Maptool
 
         public UILabel    titleLabel  = null;
         public UIButton   hideButton  = null;
+        public UIButton   closeButton = null;
         public GameObject contents    = null;
-        public GameObject scrollView   = null;
+        public GameObject scrollView  = null;
 
         #endregion Public Field
 
         #region Public Methods
 
-        public void WindowInit()
+        public void WindowInit(bool _isWarningObj = false)
         {
-            WindowsManager.AddChildren(this.gameObject);
+            WindowsManager.AddChildren(this.gameObject, _isWarningObj);
         }
 
         public void SetDepth(int _depth)
@@ -39,6 +40,14 @@ namespace Maptool
         public void SetWindowTitle(string _title)
         {
             titleLabel.text = _title;
+        }
+
+        /// <summary>
+        /// Button close window.
+        /// </summary>
+        public void CloseButton()
+        {
+            gameObject.SetActive(false);
         }
 
         /// <summary>

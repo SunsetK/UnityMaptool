@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Maptool.Config.Constants;
 
 namespace Maptool
 {
@@ -9,9 +10,10 @@ namespace Maptool
     {
         #region Public Field
 
-        public UILabel xLebel = null;
-        public UILabel yLabel = null;
-        public UILabel layer  = null;
+        public UILabel    xLebel = null;
+        public UILabel    yLabel = null;
+        public UILabel    layer  = null;
+        public GameObject canvs  = null;
 
         #endregion Public Field
 
@@ -32,17 +34,33 @@ namespace Maptool
 
         public void SetX()
         {
-            MapSize = new Vector2(Convert.ToInt32(xLebel.text), MapSize.y);
+            try
+            {
+                MapSize = new Vector2(Convert.ToInt32(xLebel.text), MapSize.y);
+            }
+            catch 
+            {
+               WindowsManager.PopupWarning(WARNING_MESSAGES.MAP_SETTING.ONLY_NUMBER);
+            }
         }
 
         public void SetY()
         {
-            MapSize = new Vector2(MapSize.x, Convert.ToInt32(yLabel.text));
+            try
+            {
+                MapSize = new Vector2(MapSize.x, Convert.ToInt32(yLabel.text));
+            }
+            catch
+            {
+                WindowsManager.PopupWarning(WARNING_MESSAGES.MAP_SETTING.ONLY_NUMBER);
+            }
+            
         }
 
         public void RefreshMapSize()
         {
-            MaptoolManager.SetMapSize(MapSize);
+            MaptoolManager.Instance.SetMapSize(MapSize);
+            canvs.GetComponent<Canvas>().RefreshMap();
         }
 
         public void LeftButton()
@@ -53,7 +71,7 @@ namespace Maptool
             }
 
             layer.text = CurrentLayer.ToString("D2");
-            MaptoolManager.SetLayer(CurrentLayer);
+            MaptoolManager.Instance.SetLayer(CurrentLayer);
         }
 
         public void RightButton()
@@ -64,7 +82,7 @@ namespace Maptool
             }
 
             layer.text = CurrentLayer.ToString("D2");
-            MaptoolManager.SetLayer(CurrentLayer);
+            MaptoolManager.Instance.SetLayer(CurrentLayer);
         }
 
         #endregion Public Methods

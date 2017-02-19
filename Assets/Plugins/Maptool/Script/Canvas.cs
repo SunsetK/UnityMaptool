@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Maptool
 {
-    public class Canvas : MaptoolManager
+    public class Canvas : MonoBehaviour
     {
         #region Public Field
 
-        public UIGrid     grid = null;
-        public GameObject tile = null;
+        public UIGrid           grid  = null;
+        public GameObject       tile  = null;
+        public Queue<GameObject> tiles = new Queue<GameObject>();
 
         #endregion Public Field
 
@@ -24,9 +25,32 @@ namespace Maptool
             InitMap();
         }
 
-        public void Update()
+        public void RefreshMap()
         {
-            DrawMap();
+            int _mapSizeNumber = MaptoolManager.Instance.GetTileNumber();
+            grid.GetComponent<UIGrid>().maxPerLine = (int)MaptoolManager.Instance.MapSize.x;
+
+            if (tiles.Count < _mapSizeNumber)
+            {
+                int refCount = _mapSizeNumber - tiles.Count;
+
+                for (int i = 0; i < refCount; i++)
+                {
+                    AddTileObject(i);
+                }
+            }
+            else if (tiles.Count > _mapSizeNumber)
+            {
+                int refCount = tiles.Count - _mapSizeNumber;
+
+                for (int i = 0; i < refCount; i++)
+                {
+                    var obj = tiles.Dequeue();
+                    Destroy(obj.gameObject);
+                }
+            }
+
+            grid.repositionNow = true;
         }
 
         #endregion Public Methods
@@ -35,19 +59,25 @@ namespace Maptool
 
         private void InitMap()
         {
-            /*
-            var tileInstance = Instantiate(tile) as GameObject;
-            var tileComponent = tileInstance.GetComponent<TileMenu.TileSelectButton>();
+            int _tileNumber = MaptoolManager.Instance.GetTileNumber();
+            grid.GetComponent<UIGrid>().maxPerLine = (int)MaptoolManager.Instance.MapSize.x;
 
-            tileComponent.SetParent(grid.gameObject);
-            grid.repositionNow = true;
-            tileInstance.transform.SetParent(grid.transform, false);
-            */
+            for (int i = 0; i < _tileNumber; i++)
+            {
+                AddTileObject(i);
+            }
         }
 
-        private void DrawMap()
+        private void AddTileObject(int _idx)
         {
-            
+            var tileInstance = Instantiate(tile) as GameObject;
+            var tileComponent = tileInstance.GetComponent<Component.TileObject>();
+
+            tileComponent.Init(this.gameObject, _idx);
+
+            grid.repositionNow = true;
+            tileInstance.transform.SetParent(grid.transform, false);
+            tiles.Enqueue(tileInstance.gameObject);
         }
 
         #endregion Private Methods

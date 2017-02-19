@@ -12,6 +12,14 @@ namespace Maptool.Config.Constants
         public static readonly string MAP_ATLAS_PATH = "Sprites/Atlas/MapResourcesAtlas";
     }
 
+    public class WARNING_MESSAGES
+    {
+        public class MAP_SETTING
+        {
+            public static readonly string ONLY_NUMBER = "숫자만 입력하세요.";
+        }
+    }
+
     /// <summary>
     /// Tile information.
     /// </summary>
@@ -39,6 +47,7 @@ namespace Maptool.Config.Constants
         /// </summary>
         public class MAX_NUMBER
         {
+            public static int EMPTY  = 1;
             public static int GROUND = 4;
             public static int PATH   = 4;
             public static int WATER  = 9;

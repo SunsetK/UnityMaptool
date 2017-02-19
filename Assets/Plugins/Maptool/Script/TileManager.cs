@@ -134,6 +134,8 @@ namespace Maptool
         {
             switch (_type)
             {
+                case TYPE.EMPTY:
+                    return TILE_INFO.MAX_NUMBER.EMPTY;
                 case TYPE.GROUND:
                     return TILE_INFO.MAX_NUMBER.GROUND;
                 case TYPE.PATH:
@@ -145,6 +147,36 @@ namespace Maptool
             }
 
             return -1;
+        }
+
+        public static Quaternion GetRotation(ROTATION _rot)
+        {
+            switch (_rot)
+            {
+                case TileManager.ROTATION.DEFAULT:
+                    return Quaternion.Euler(new Vector3(0f, 0f, 0f));
+                case TileManager.ROTATION.ROT90:
+                    return Quaternion.Euler(new Vector3(0f, 0f, -90f));
+                case TileManager.ROTATION.ROT180:
+                    return Quaternion.Euler(new Vector3(0f, 0f, -180f));
+                case TileManager.ROTATION.ROT270:
+                    return Quaternion.Euler(new Vector3(0f, 0f, -270f));
+            }
+
+            return Quaternion.Euler(new Vector3(0f, 0f, 0f));
+        }
+
+        public static Vector3 GetReverse(Vector3 _ref, REVERS _rvs)
+        {
+            switch (_rvs)
+            {
+                case TileManager.REVERS.DEFAULT:
+                    return new Vector3(1f, _ref.y);
+                case TileManager.REVERS.REVERS:
+                    return new Vector3(-1f, _ref.y);
+            }
+
+            return _ref;
         }
 
         #endregion Public Methods

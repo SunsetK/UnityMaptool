@@ -16,6 +16,12 @@ namespace Maptool
 
         #endregion Public Field
 
+        #region Public Property
+
+        public Tile SelectedTile { get; set; }
+
+        #endregion Public Property
+
         #region Public Methods
 
         /// <summary>
@@ -23,27 +29,58 @@ namespace Maptool
         /// </summary>
         public void Start()
         {
+            SelectedTile = new Tile();
             WindowInit();
             InitTileSet();
+        }
+
+        public void RotateTile()
+        {
+            SelectedTile.RotateTile();
+            UpdatePreviewTile();
+        }
+
+        public void ReverseTile()
+        {
+            SelectedTile.ReverseTile();
+            UpdatePreviewTile();
         }
 
         /// <summary>
         /// St Selected Title.
         /// </summary>
         /// <param name="_name">Tile name.</param>
-        public void SetSelectedTile(string _name)
+        public void  SetSelectedTile(Tile _tile)
         {
             for (int i = 0; i < tileButtons.Count; i++)
             {
                 tileButtons[i].GetComponent<TileMenu.TileSelectButton>().SetSelectStatus(false);
             }
             
-            selectedSprite.spriteName = _name;
+            selectedSprite.spriteName = _tile.Name;
+            SelectedTile.Init(_tile);
+            UpdatePreviewTile(true);
         }
 
         #endregion Public Methods
 
         #region Private Methods
+
+        private void UpdatePreviewTile(bool _default = false)
+        {
+            var scale = selectedSprite.transform.localScale;
+
+            if (_default)
+            {
+                SelectedTile.Rotaion = TileManager.ROTATION.DEFAULT;
+                SelectedTile.Reverse = TileManager.REVERS.DEFAULT;
+            }
+
+            selectedSprite.transform.localRotation = TileManager.GetRotation(SelectedTile.Rotaion);
+            selectedSprite.transform.localScale = TileManager.GetReverse(scale, SelectedTile.Reverse);
+
+            MaptoolManager.Instance.SetTile(SelectedTile);
+        }
 
         /// <summary>
         /// Innitialize tile set.
@@ -52,8 +89,9 @@ namespace Maptool
         {
             List<TileManager.TYPE> _tileType = new List<TileManager.TYPE>
             {
-                TileManager.TYPE.GROUND, TileManager.TYPE.PATH,
-                TileManager.TYPE.WATER,  TileManager.TYPE.OBJECT
+                TileManager.TYPE.EMPTY, TileManager.TYPE.GROUND, 
+                TileManager.TYPE.PATH, TileManager.TYPE.WATER,
+                TileManager.TYPE.OBJECT
             };
 
             for (int i = 0; i < _tileType.Count; i ++)
