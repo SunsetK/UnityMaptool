@@ -46,10 +46,11 @@ static public class NGUITools
 		}
 	}
 
-	/// <summary>
-	/// Helper function -- whether the disk access is allowed.
-	/// </summary>
+    /// <summary>
+    /// Helper function -- whether the disk access is allowed.
+    /// </summary>
 
+#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6
 	static public bool fileAccess
 	{
 		get
@@ -58,6 +59,7 @@ static public class NGUITools
 				Application.platform != RuntimePlatform.OSXWebPlayer;
 		}
 	}
+#endif
 
 	/// <summary>
 	/// Play the specified audio clip.
@@ -1011,11 +1013,11 @@ static public class NGUITools
 		// Commented out because apparently it causes Unity 4.5.3 to lag horribly:
 		// http://www.tasharen.com/forum/index.php?topic=10882.0
 //#if UNITY_4_3
- #if UNITY_FLASH
+#if UNITY_FLASH
 		object comp = go.GetComponent<T>();
- #else
+#else
 		T comp = go.GetComponent<T>();
- #endif
+#endif
 		if (comp == null)
 		{
 			Transform t = go.transform.parent;
@@ -1026,11 +1028,11 @@ static public class NGUITools
 				t = t.parent;
 			}
 		}
- #if UNITY_FLASH
+#if UNITY_FLASH
 		return (T)comp;
- #else
+#else
 		return comp;
- #endif
+#endif
 //#else
 //		return go.GetComponentInParent<T>();
 //#endif
@@ -1044,11 +1046,11 @@ static public class NGUITools
 	{
 		if (trans == null) return null;
 #if UNITY_4_3
- #if UNITY_FLASH
+#if UNITY_FLASH
 		object comp = trans.GetComponent<T>();
- #else
+#else
 		T comp = trans.GetComponent<T>();
- #endif
+#endif
 		if (comp == null)
 		{
 			Transform t = trans.transform.parent;
@@ -1059,11 +1061,11 @@ static public class NGUITools
 				t = t.parent;
 			}
 		}
- #if UNITY_FLASH
+#if UNITY_FLASH
 		return (T)comp;
- #else
+#else
 		return comp;
- #endif
+#endif
 #else
 		return trans.GetComponentInParent<T>();
 #endif
@@ -1386,7 +1388,9 @@ static public class NGUITools
 #if UNITY_WEBPLAYER || UNITY_FLASH || UNITY_METRO || UNITY_WP8 || UNITY_WP_8_1
 		return false;
 #else
+#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6
 		if (!NGUITools.fileAccess) return false;
+#endif
 
 		string path = Application.persistentDataPath + "/" + fileName;
 
@@ -1412,18 +1416,20 @@ static public class NGUITools
 		file.Close();
 		return true;
 #endif
-	}
+    }
 
-	/// <summary>
-	/// Load all binary data from the specified file.
-	/// </summary>
+    /// <summary>
+    /// Load all binary data from the specified file.
+    /// </summary>
 
-	static public byte[] Load (string fileName)
+    static public byte[] Load (string fileName)
 	{
 #if UNITY_WEBPLAYER || UNITY_FLASH || UNITY_METRO || UNITY_WP8 || UNITY_WP_8_1
 		return null;
 #else
+#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6
 		if (!NGUITools.fileAccess) return null;
+#endif
 
 		string path = Application.persistentDataPath + "/" + fileName;
 
@@ -1433,13 +1439,13 @@ static public class NGUITools
 		}
 		return null;
 #endif
-	}
+    }
 
-	/// <summary>
-	/// Pre-multiply shaders result in a black outline if this operation is done in the shader. It's better to do it outside.
-	/// </summary>
+    /// <summary>
+    /// Pre-multiply shaders result in a black outline if this operation is done in the shader. It's better to do it outside.
+    /// </summary>
 
-	static public Color ApplyPMA (Color c)
+    static public Color ApplyPMA (Color c)
 	{
 		if (c.a != 1f)
 		{
